@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name = "format-detection" content = "telephone=no"/>
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width;" />
+	<link rel="stylesheet" type="text/css" href="css/index.css" />
+	
+	<script type="text/javascript" language="JavaScript">
+		function Runden2Dezimal(x) {
+		Ergebnis = Math.round(x * 100) / 100 ;
+		return Ergebnis;
+		}
+
+	// Quelle: http://www.web-toolbox.net/webtoolbox/mathematik/werte-runden.htm
+	</script>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script>
+		var eingabe = parent.eingabe;
+		var waehrung = parent.waehrung;
+		$(document).ready(function() {
+			$.getJSON('http://api.fixer.io/latest', function(data) {
+          		var kurs=data.rates[waehrung]; //Aus der API wird für die gewählte Währung der Kurs abgefragt
+				var wechsel = eingabe*kurs; //Der Wechselbetrag wird berechnet
+				document.getElementById("waehrung").innerHTML = waehrung; //Übergabe in HTML Tag mit ID waehrung die ausgewählte Währung
+				document.getElementById("betragEUR").innerHTML = eingabe; //analog zum Kommentar oben mit betragEUR
+				document.getElementById("kurs").innerHTML = kurs; //analog zum Kommentar oben mit kurs
+				document.getElementById("wechsel").innerHTML = Runden2Dezimal(wechsel);//analog zum Kommentar oben mit wechsel und die Funktion Runden2Dezimal wird aufgerufen
+      			});
+		});
+		</script>
+		<script type="text/javascript"> //Skript um zur eingabe.html zurückzukehren
+		function zurueck(){
+			location.href="eingabe.html";
+			return false;
+		}
+	</script>
+        <title>Ausgabe</title>
+    </head>
+
+
+    <body>
+        <header>
+			<img src="img/logo.png" width="213" height="250" alt="logo">
+		</header>
+		<main>
+			<section>
+					<p>Betrag in EUR:</p>
+			</section>
+			<section>
+					<p id="betragEUR"><!--Hier kommt die Ausgabe aus dem Skript für den Eurobetrag hinein --></p>
+			</section>
+			
+			<section>
+					<p>Währung:</p>
+			</section>
+			<section>
+					<p id="waehrung"><!--Hier kommt die Ausgabe aus dem Skript für die Währung hinein --></p>
+			</section>
+			
+			<section>
+					<p>Aktueller Kurs:</p>
+			</section>
+			<section>
+					<p id="kurs"><!--Hier kommt die Ausgabe aus dem Skript für den aktuellen Kurs hinein --></p>
+			</section>
+			
+			<section>
+					<p class="final">Wechselbetrag:</p>
+			</section>
+			<section>
+					<p id="wechsel" class="final"><!--Hier kommt die Ausgabe aus dem Skript für den Wechselbetrag hinein --></p>
+			</section>
+			
+			<section id="mitte">
+					<p class="center"><button class="Button" onClick="zurueck()";><b>Wiederholen</b></button></p>
+			</section>
+		</main>
+    </body>
+</html>
